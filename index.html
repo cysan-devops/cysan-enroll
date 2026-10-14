@@ -1,82 +1,160 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Cysan Shelly sync: enrollment / inscription</title>
+<title>Cysan · Shelly</title>
 <style>
-  :root { color-scheme: light dark; --bg: #ffffff; --fg: #1b1f24; --muted: #57606a; --line: #d0d7de; --box: #f6f8fa; --accent: #0b6e4f; }
-  @media (prefers-color-scheme: dark) { :root { --bg: #0d1117; --fg: #e6edf3; --muted: #9da7b3; --line: #30363d; --box: #161b22; --accent: #3fb68b; } }
+  :root { color-scheme: light dark; --bg: #ffffff; --fg: #1b1f24; --muted: #57606a; --line: #d0d7de; --box: #f6f8fa; --accent: #0b6e4f; --accent-bg: #e3f4ec; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0d1117; --fg: #e6edf3; --muted: #9da7b3; --line: #30363d; --box: #161b22; --accent: #3fb68b; --accent-bg: #0f2a20; } }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
-  main { max-width: 860px; margin: 0 auto; padding: 32px 20px 56px; }
-  h1 { font-size: 1.6rem; margin: 0 0 4px; } h2 { font-size: 1.2rem; margin: 36px 0 8px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
-  .sub { color: var(--muted); margin: 0 0 20px; } nav a { margin-right: 14px; }
-  a { color: var(--accent); } ol li { margin: 6px 0; }
-  code, pre { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.86rem; }
-  pre { background: var(--box); border: 1px solid var(--line); border-radius: 6px; padding: 12px; overflow-x: auto; white-space: pre; }
-  .wrap { overflow-x: auto; } table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
-  th, td { text-align: left; border-bottom: 1px solid var(--line); padding: 8px 6px; vertical-align: top; }
-  td.h { font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; word-break: break-all; }
-  .note { background: var(--box); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 4px; }
-  footer { color: var(--muted); font-size: 0.85rem; margin-top: 40px; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 28px 20px 56px; }
+  h1 { font-size: 1.55rem; margin: 0 0 6px; } h2 { font-size: 1.2rem; margin: 30px 0 8px; } h3 { font-size: 1.05rem; margin: 22px 0 6px; }
+  .lang { display: flex; gap: 10px; margin: 0 0 22px; } .lang a { border: 1px solid var(--line); border-radius: 6px; padding: 4px 12px; text-decoration: none; color: var(--fg); }
+  .intro { color: var(--muted); margin: 0 0 18px; } a { color: var(--accent); }
+  .steps { width: 100%; height: auto; margin: 8px 0 4px; } .steps rect { fill: var(--box); stroke: var(--line); } .steps .you { fill: var(--accent-bg); stroke: var(--accent); }
+  .steps text { fill: var(--fg); font: 15px system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; } .steps .small { fill: var(--muted); font-size: 13px; } .steps line { stroke: var(--muted); stroke-width: 1.5; }
+  ol li, ul li { margin: 5px 0; } .key { background: var(--box); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 0.92em; }
+  .dl { display: block; border: 1px solid var(--accent); border-radius: 8px; padding: 12px 14px; margin: 8px 0; text-decoration: none; color: var(--fg); }
+  .dl strong { color: var(--accent); } .dl span { color: var(--muted); font-size: 0.9em; margin-left: 6px; }
+  .note { background: var(--box); border-left: 3px solid var(--accent); padding: 10px 14px; }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 40px 0; }
+  .tech { font-size: 0.85rem; color: var(--muted); } .tech table { border-collapse: collapse; width: 100%; } .tech td, .tech th { text-align: left; border-bottom: 1px solid var(--line); padding: 6px 4px; vertical-align: top; }
+  .tech .h, .tech pre { font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; word-break: break-all; white-space: pre-wrap; margin: 0; }
+  .wrap { overflow-x: auto; }
+  .tech summary { cursor: pointer; font-weight: 600; color: var(--muted); } .tech details[open] summary { margin-bottom: 10px; }
+  footer { color: var(--muted); font-size: 0.85rem; margin-top: 18px; }
 </style>
 </head>
 <body>
 <main>
-<h1>Cysan Shelly sync</h1>
-<p class="sub">Enrollment of a computer that sends Shelly meter data to Cysan &middot; Inscription d'un ordinateur qui envoie les donn&eacute;es d'un compteur Shelly &agrave; Cysan</p>
-<nav><a href="#en">English</a><a href="#fr">Fran&ccedil;ais</a><a href="#files">Downloads / T&eacute;l&eacute;chargements</a></nav>
-
-<section id="en" lang="en">
-<h2>English</h2>
-<p>You need: a Windows computer with <strong>Docker Desktop</strong> running, the data folder of your Shelly exports, and the <strong>one-time code</strong> Cysan sent you. The code works once, within its validity period.</p>
-<ol>
-  <li>Download the installer and the image file for your computer's processor (most computers: <em>x86-64</em>) from the table below.</li>
-  <li>Check both SHA-256 values in PowerShell: <code>Get-FileHash &lt;file&gt; -Algorithm SHA256</code>. They must equal the table's.</li>
-  <li>Unzip the installer, open PowerShell in its folder, and run (one line):</li>
-</ol>
-<pre>powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -ImageTar &lt;image file&gt; -ImageSha256 &lt;its SHA-256&gt;</pre>
-<ol start="4">
-  <li>Type the code when asked (typing is hidden). The installer checks Docker, finds your data folder and asks you to confirm it, enrolls this computer and starts the sync.</li>
-  <li>Keep the install folder's <code>secrets</code> folder private: never copy, e-mail or upload it.</li>
-</ol>
-<p class="note">Your computer's private key is created on your computer and never leaves it. The sync reads your data folder <strong>read-only</strong>. Never share your code; if you think someone else saw it, tell Cysan so it can be cancelled.</p>
-</section>
+<nav class="lang"><a href="#fr">Français</a><a href="#en">English</a></nav>
 
 <section id="fr" lang="fr">
-<h2>Fran&ccedil;ais</h2>
-<p>Il vous faut&nbsp;: un ordinateur Windows avec <strong>Docker Desktop</strong> d&eacute;marr&eacute;, le dossier de donn&eacute;es de vos exports Shelly, et le <strong>code &agrave; usage unique</strong> envoy&eacute; par Cysan. Le code ne sert qu'une fois, pendant sa dur&eacute;e de validit&eacute;.</p>
+<h1>Connecter votre compteur Shelly à Cysan</h1>
+<p class="intro">Cette page vous aide à installer le petit programme qui envoie les relevés de votre compteur Shelly à Cysan. Comptez environ 10&nbsp;minutes.</p>
+<svg class="steps" viewBox="0 0 680 120" role="img" aria-label="Trois étapes : l'invitation de Cysan, l'installation sur votre ordinateur, c'est terminé">
+<rect x="10" y="10" width="190" height="80" rx="10"/><text x="105" y="44" text-anchor="middle">1. L'invitation</text><text class="small" x="105" y="68" text-anchor="middle">Cysan vous envoie le code</text>
+<rect class="you" x="245" y="10" width="190" height="80" rx="10"/><text x="340" y="44" text-anchor="middle">2. L'installation</text><text class="small" x="340" y="68" text-anchor="middle">C'est vous qui la faites</text>
+<rect x="480" y="10" width="190" height="80" rx="10"/><text x="575" y="44" text-anchor="middle">3. C'est terminé</text><text class="small" x="575" y="68" text-anchor="middle">Les données partent seules</text>
+<line x1="204" y1="50" x2="241" y2="50"/><line x1="234" y1="44" x2="241" y2="50"/><line x1="234" y1="56" x2="241" y2="50"/>
+<line x1="439" y1="50" x2="476" y2="50"/><line x1="469" y1="44" x2="476" y2="50"/><line x1="469" y1="56" x2="476" y2="50"/>
+</svg>
+
+<h2>Ce qu'il vous faut</h2>
+<ul>
+  <li>Un ordinateur Windows allumé et connecté à Internet.</li>
+  <li>Docker Desktop installé et démarré (l'icône de baleine près de l'horloge).</li>
+  <li>Le message de Cysan avec votre code personnel.</li>
+  <li>Le dossier où sont enregistrés vos relevés Shelly. L'installateur le trouve en général tout seul.</li>
+</ul>
+
+<h2>1. L'invitation</h2>
+<p>Cysan vous envoie un message (WhatsApp ou e-mail) avec le lien de cette page et votre code personnel, par exemple <span class="key">ABCD-EFGH-JKMN-PQRS-TVWX</span>. Le code ne fonctionne qu'une seule fois, pendant 48&nbsp;heures. Gardez-le pour vous.</p>
+<p>Pas de code, ou code expiré&nbsp;? Demandez-en un nouveau à Cysan.</p>
+
+<h2>2. L'installation</h2>
 <ol>
-  <li>T&eacute;l&eacute;chargez l'installateur et le fichier image correspondant au processeur de votre ordinateur (la plupart des ordinateurs&nbsp;: <em>x86-64</em>) dans le tableau ci-dessous.</li>
-  <li>V&eacute;rifiez les deux SHA-256 dans PowerShell&nbsp;: <code>Get-FileHash &lt;fichier&gt; -Algorithm SHA256</code>. Ils doivent &ecirc;tre identiques &agrave; ceux du tableau.</li>
-  <li>D&eacute;compressez l'installateur, ouvrez PowerShell dans son dossier et lancez (une seule ligne)&nbsp;:</li>
+  <li>Démarrez Docker Desktop et attendez qu'il indique qu'il fonctionne.</li>
+  <li>Téléchargez le fichier adapté à votre ordinateur (voir «&nbsp;Quel fichier choisir&nbsp;?&nbsp;» ci-dessous).</li>
+  <li>Faites un clic droit sur le fichier téléchargé et choisissez «&nbsp;Extraire tout&nbsp;».</li>
+  <li>Dans le dossier extrait, double-cliquez sur <span class="key">Install</span>. Si Windows affiche un avertissement bleu, cliquez sur «&nbsp;Informations complémentaires&nbsp;», puis sur «&nbsp;Exécuter quand même&nbsp;».</li>
+  <li>Quand la fenêtre demande <span class="key">Enrollment code</span>, tapez votre code puis appuyez sur Entrée. Ce que vous tapez reste invisible, c'est normal.</li>
+  <li>Quand elle vous montre le dossier de vos relevés et demande si c'est le bon, appuyez sur Entrée pour dire oui.</li>
 </ol>
-<pre>powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -ImageTar &lt;fichier image&gt; -ImageSha256 &lt;son SHA-256&gt;</pre>
-<ol start="4">
-  <li>Saisissez le code quand il est demand&eacute; (la saisie est masqu&eacute;e). L'installateur v&eacute;rifie Docker, trouve votre dossier de donn&eacute;es et vous demande de le confirmer, inscrit cet ordinateur et d&eacute;marre la synchronisation.</li>
-  <li>Gardez priv&eacute; le dossier <code>secrets</code> du dossier d'installation&nbsp;: ne le copiez, ne l'envoyez et ne le t&eacute;l&eacute;versez jamais.</li>
-</ol>
-<p class="note">La cl&eacute; priv&eacute;e de votre ordinateur est cr&eacute;&eacute;e sur votre ordinateur et ne le quitte jamais. La synchronisation lit votre dossier de donn&eacute;es en <strong>lecture seule</strong>. Ne communiquez jamais votre code&nbsp;; si vous pensez que quelqu'un d'autre l'a vu, pr&eacute;venez Cysan pour qu'il soit annul&eacute;.</p>
+
+<h3>Quel fichier choisir&nbsp;?</h3>
+<p>Ouvrez Paramètres, puis Système, puis «&nbsp;Informations système&nbsp;» (ou «&nbsp;À propos de&nbsp;»), et regardez la ligne «&nbsp;Type du système&nbsp;».</p>
+<a class="dl" href="https://github.com/cysan-devops/cysan-enroll/releases/download/installer-3/shelly-sync-installer-3-x64.zip"><strong>Télécharger pour la plupart des ordinateurs</strong><span>56 Mo</span><br>« Type du système » indique « processeur x64 »</a>
+<a class="dl" href="https://github.com/cysan-devops/cysan-enroll/releases/download/installer-3/shelly-sync-installer-3-arm64.zip"><strong>Télécharger pour les ordinateurs ARM</strong><span>58 Mo</span><br>« Type du système » indique « processeur ARM »</a>
+
+<h2>3. C'est terminé</h2>
+<p>Quand la fenêtre affiche <span class="key">DONE</span>, l'installation est finie. Votre ordinateur envoie désormais les relevés tout seul. Laissez Docker Desktop allumé. Cysan vous confirmera la bonne réception de vos données.</p>
+
+<h2>Un problème&nbsp;?</h2>
+<ul>
+  <li><strong>«&nbsp;The code was refused&nbsp;»</strong>&nbsp;: vérifiez votre code. S'il a déjà servi ou s'il a expiré, demandez-en un nouveau à Cysan.</li>
+  <li><strong>«&nbsp;Docker did not answer&nbsp;»</strong>&nbsp;: démarrez Docker Desktop, attendez une minute, puis double-cliquez de nouveau sur Install.</li>
+  <li><strong>«&nbsp;This image is for CPU type…&nbsp;»</strong>&nbsp;: vous avez pris l'autre fichier. Téléchargez le bon et recommencez&nbsp;: votre code n'a pas été utilisé.</li>
+  <li>Autre chose&nbsp;: envoyez à Cysan une photo de la fenêtre.</li>
+</ul>
+<p class="note">Votre code et le dossier «&nbsp;secrets&nbsp;» créé par l'installateur sont personnels&nbsp;: ne les partagez jamais. Le programme lit seulement votre dossier de relevés et ne le modifie jamais.</p>
 </section>
 
-<section id="files">
-<h2>Downloads / T&eacute;l&eacute;chargements</h2>
+<hr>
+
+<section id="en" lang="en">
+<h1>Connect your Shelly meter to Cysan</h1>
+<p class="intro">This page helps you install the small program that sends your Shelly meter's readings to Cysan. It takes about 10 minutes.</p>
+<svg class="steps" viewBox="0 0 680 120" role="img" aria-label="Three steps: the invitation from Cysan, the installation on your computer, done">
+<rect x="10" y="10" width="190" height="80" rx="10"/><text x="105" y="44" text-anchor="middle">1. Invitation</text><text class="small" x="105" y="68" text-anchor="middle">Cysan sends your code</text>
+<rect class="you" x="245" y="10" width="190" height="80" rx="10"/><text x="340" y="44" text-anchor="middle">2. Installation</text><text class="small" x="340" y="68" text-anchor="middle">You do this part</text>
+<rect x="480" y="10" width="190" height="80" rx="10"/><text x="575" y="44" text-anchor="middle">3. Done</text><text class="small" x="575" y="68" text-anchor="middle">Data is sent by itself</text>
+<line x1="204" y1="50" x2="241" y2="50"/><line x1="234" y1="44" x2="241" y2="50"/><line x1="234" y1="56" x2="241" y2="50"/>
+<line x1="439" y1="50" x2="476" y2="50"/><line x1="469" y1="44" x2="476" y2="50"/><line x1="469" y1="56" x2="476" y2="50"/>
+</svg>
+
+<h2>What you need</h2>
+<ul>
+  <li>A Windows computer, switched on and connected to the internet.</li>
+  <li>Docker Desktop installed and running (the whale icon near the clock).</li>
+  <li>The message from Cysan with your personal code.</li>
+  <li>The folder where your Shelly readings are saved. The installer usually finds it on its own.</li>
+</ul>
+
+<h2>1. Invitation</h2>
+<p>Cysan sends you a message (WhatsApp or e-mail) with the link to this page and your personal code, for example <span class="key">ABCD-EFGH-JKMN-PQRS-TVWX</span>. The code works only once, for 48 hours. Keep it to yourself.</p>
+<p>No code, or the code has expired? Ask Cysan for a new one.</p>
+
+<h2>2. Installation</h2>
+<ol>
+  <li>Start Docker Desktop and wait until it says it is running.</li>
+  <li>Download the file for your computer (see "Which file?" below).</li>
+  <li>Right-click the downloaded file and choose "Extract All".</li>
+  <li>In the extracted folder, double-click <span class="key">Install</span>. If Windows shows a blue warning, click "More info", then "Run anyway".</li>
+  <li>When the window asks for the <span class="key">Enrollment code</span>, type your code and press Enter. What you type stays hidden; that is normal.</li>
+  <li>When it shows the folder of your readings and asks if it is the right one, press Enter for yes.</li>
+</ol>
+
+<h3>Which file?</h3>
+<p>Open Settings, then System, then "About", and look at the line "System type".</p>
+<a class="dl" href="https://github.com/cysan-devops/cysan-enroll/releases/download/installer-3/shelly-sync-installer-3-x64.zip"><strong>Download for most computers</strong><span>56 MB</span><br>&quot;System type&quot; says &quot;x64-based processor&quot;</a>
+<a class="dl" href="https://github.com/cysan-devops/cysan-enroll/releases/download/installer-3/shelly-sync-installer-3-arm64.zip"><strong>Download for ARM computers</strong><span>58 MB</span><br>&quot;System type&quot; says &quot;ARM-based processor&quot;</a>
+
+<h2>3. Done</h2>
+<p>When the window shows <span class="key">DONE</span>, the installation is finished. Your computer now sends the readings by itself. Leave Docker Desktop running. Cysan will confirm that your data has arrived.</p>
+
+<h2>A problem?</h2>
+<ul>
+  <li><strong>"The code was refused"</strong>: check your code. If it was already used or has expired, ask Cysan for a new one.</li>
+  <li><strong>"Docker did not answer"</strong>: start Docker Desktop, wait a minute, then double-click Install again.</li>
+  <li><strong>"This image is for CPU type…"</strong>: you took the other file. Download the right one and start again: your code was not used.</li>
+  <li>Anything else: send Cysan a photo of the window.</li>
+</ul>
+<p class="note">Your code and the "secrets" folder the installer creates are personal: never share them. The program only reads your readings folder and never changes it.</p>
+</section>
+
+<hr>
+
+<section class="tech" id="tech">
+<details>
+<summary>Pour les techniciens / For technical staff</summary>
 <div class="wrap"><table>
-<thead><tr><th>File / Fichier</th><th>For / Pour</th><th>Size / Taille</th><th>SHA-256</th></tr></thead>
+<thead><tr><th>Fichier / File</th><th>SHA-256</th></tr></thead>
 <tbody>
-<tr><td><a href="https://github.com/cysan-devops/cysan-enroll/releases/download/installer-2/shelly-sync-installer-2.zip">shelly-sync-installer-2.zip</a></td><td>Installer / Installateur (Windows)</td><td>13 kB</td><td class="h">95D3D4484E435D4D9DAB727D5533E8EF15EA4D2B0B7A29F30812EAB00A8F2338</td></tr>
-<tr><td><a href="https://github.com/cysan-devops/cysan-enroll/releases/download/installer-2/shelly-sidecar-0.2.0-amd64.tar">shelly-sidecar-0.2.0-amd64.tar</a></td><td>x86-64 (Intel, AMD): most computers / la plupart des ordinateurs</td><td>55.9 MB</td><td class="h">83791F77FF8B59EC573149F3BA82693BF33CABC7D4BC9AE4436FF21691365344</td></tr>
-<tr><td><a href="https://github.com/cysan-devops/cysan-enroll/releases/download/installer-2/shelly-sidecar-0.2.0-arm64.tar">shelly-sidecar-0.2.0-arm64.tar</a></td><td>ARM 64-bit (e.g. Snapdragon) / ARM 64 bits</td><td>57.7 MB</td><td class="h">4C6FF761FFE2F32674677B80E8592107F4D53EBBA5BE373FE98365E304DD1E57</td></tr>
+<tr><td><a href="https://github.com/cysan-devops/cysan-enroll/releases/download/installer-3/ca.crt">ca.crt</a></td><td class="h">E4414580982E4757312F01713E986C80CF4F9C6056DF33BB72E1B8FF1C706666</td></tr>
+<tr><td><a href="https://github.com/cysan-devops/cysan-enroll/releases/download/installer-3/shelly-sync-installer-3-arm64.zip">shelly-sync-installer-3-arm64.zip</a></td><td class="h">ABAF3F5D8713762D4C85E39C0C17EDF3BD12C6B521A9B50BC6B09AD36A6171FD</td></tr>
+<tr><td><a href="https://github.com/cysan-devops/cysan-enroll/releases/download/installer-3/shelly-sync-installer-3-x64.zip">shelly-sync-installer-3-x64.zip</a></td><td class="h">D589C3285DCCA707D6E290E6A736C078243DACCBE8E220FBF243553EC62F96CD</td></tr>
 </tbody>
 </table></div>
-<p>CA certificate fingerprint (in the installer's <code>ca.crt</code> and its <code>README.txt</code>) / Empreinte du certificat de l'AC (dans <code>ca.crt</code> et <code>README.txt</code> de l'installateur)&nbsp;:</p>
+<p>Empreinte du certificat de l'autorité de Cysan (dans <code>ca.crt</code>) / Cysan CA certificate fingerprint:</p>
 <pre>A7:DC:59:AA:3B:D7:86:FD:51:BD:30:3C:EA:91:DE:F2:1B:B1:E3:29:7C:6D:A8:F3:F0:31:58:56:DD:35:39:87</pre>
-<p>Questions: <a href="https://cysan.ca">cysan.ca</a></p>
+<p>Installateur / Installer 3 · installer-3 · 2026-10-14 01:04 UTC</p>
+</details>
 </section>
-
-<footer>Installer 2 &middot; release installer-2 &middot; published 2026-10-13 01:39 UTC</footer>
+<footer>Cysan · <a href="https://cysan.ca">cysan.ca</a></footer>
 </main>
 </body>
 </html>
